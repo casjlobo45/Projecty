@@ -1,0 +1,121 @@
+Black-Creature-CMC:0 to 2,0
+Black-Enchantment-CMC:0 to 2,0
+Black-Instant-CMC:0 to 2,0
+Black-Artifact-CMC:0 to 2,0
+Black-Sorcery-CMC:0 to 2,0
+Black-Creature-CMC:3 to 6,0
+Black-Enchantment-CMC:3 to 6,0
+Black-Instant-CMC:3 to 6,0
+Black-Artifact-CMC:3 to 6,0
+Black-Sorcery-CMC:3 to 6,0
+Black-Creature-CMC:7 to 9,0
+Black-Enchantment-CMC:7 to 9,0
+Black-Instant-CMC:7 to 9,0
+Black-Artifact-CMC:7 to 9,0
+Black-Sorcery-CMC:7 to 9,0
+Black-Creature-CMC:10+,0
+Black-Enchantment-CMC:10+,0
+Black-Instant-CMC:10+,0
+Black-Artifact-CMC:10+,0
+Black-Sorcery-CMC:10+,0
+Blue-Creature-CMC:0 to 2,0
+Blue-Enchantment-CMC:0 to 2,0
+Blue-Instant-CMC:0 to 2,0
+Blue-Artifact-CMC:0 to 2,0
+Blue-Sorcery-CMC:0 to 2,0
+Blue-Creature-CMC:3 to 6,0
+Blue-Enchantment-CMC:3 to 6,0
+Blue-Instant-CMC:3 to 6,0
+Blue-Artifact-CMC:3 to 6,0
+Blue-Sorcery-CMC:3 to 6,0
+Blue-Creature-CMC:7 to 9,0
+Blue-Enchantment-CMC:7 to 9,0
+Blue-Instant-CMC:7 to 9,0
+Blue-Artifact-CMC:7 to 9,0
+Blue-Sorcery-CMC:7 to 9,0
+Blue-Creature-CMC:10+,0
+Blue-Enchantment-CMC:10+,0
+Blue-Instant-CMC:10+,0
+Blue-Artifact-CMC:10+,0
+Blue-Sorcery-CMC:10+,0
+Green-Creature-CMC:0 to 2,0
+Green-Enchantment-CMC:0 to 2,0
+Green-Instant-CMC:0 to 2,0
+Green-Artifact-CMC:0 to 2,0
+Green-Sorcery-CMC:0 to 2,0
+Green-Creature-CMC:3 to 6,0
+Green-Enchantment-CMC:3 to 6,0
+Green-Instant-CMC:3 to 6,0
+Green-Artifact-CMC:3 to 6,0
+Green-Sorcery-CMC:3 to 6,0
+Green-Creature-CMC:7 to 9,0
+Green-Enchantment-CMC:7 to 9,0
+Green-Instant-CMC:7 to 9,0
+Green-Artifact-CMC:7 to 9,0
+Green-Sorcery-CMC:7 to 9,0
+Green-Creature-CMC:10+,0
+Green-Enchantment-CMC:10+,0
+Green-Instant-CMC:10+,0
+Green-Artifact-CMC:10+,0
+Green-Sorcery-CMC:10+,0
+White-Creature-CMC:0 to 2,0
+White-Enchantment-CMC:0 to 2,0
+White-Instant-CMC:0 to 2,0
+White-Artifact-CMC:0 to 2,0
+White-Sorcery-CMC:0 to 2,0
+White-Creature-CMC:3 to 6,0
+White-Enchantment-CMC:3 to 6,0
+White-Instant-CMC:3 to 6,0
+White-Artifact-CMC:3 to 6,0
+White-Sorcery-CMC:3 to 6,0
+White-Creature-CMC:7 to 9,0
+White-Enchantment-CMC:7 to 9,0
+White-Instant-CMC:7 to 9,0
+White-Artifact-CMC:7 to 9,0
+White-Sorcery-CMC:7 to 9,0
+White-Creature-CMC:10+,0
+White-Enchantment-CMC:10+,0
+White-Instant-CMC:10+,0
+White-Artifact-CMC:10+,0
+White-Sorcery-CMC:10+,0
+Red-Creature-CMC:0 to 2,0
+Red-Enchantment-CMC:0 to 2,0
+Red-Instant-CMC:0 to 2,0
+Red-Artifact-CMC:0 to 2,0
+Red-Sorcery-CMC:0 to 2,0
+Red-Creature-CMC:3 to 6,0
+Red-Enchantment-CMC:3 to 6,0
+Red-Instant-CMC:3 to 6,0
+Red-Artifact-CMC:3 to 6,0
+Red-Sorcery-CMC:3 to 6,0
+Red-Creature-CMC:7 to 9,0
+Red-Enchantment-CMC:7 to 9,0
+Red-Instant-CMC:7 to 9,0
+Red-Artifact-CMC:7 to 9,0
+Red-Sorcery-CMC:7 to 9,0
+Red-Creature-CMC:10+,0
+Red-Enchantment-CMC:10+,0
+Red-Instant-CMC:10+,0
+Red-Artifact-CMC:10+,0
+Red-Sorcery-CMC:10+,0
+Void-Creature-CMC:0 to 2,0
+Void-Enchantment-CMC:0 to 2,0
+Void-Instant-CMC:0 to 2,0
+Void-Artifact-CMC:0 to 2,0
+Void-Sorcery-CMC:0 to 2,0
+Void-Creature-CMC:3 to 6,0
+Void-Enchantment-CMC:3 to 6,0
+Void-Instant-CMC:3 to 6,0
+Void-Artifact-CMC:3 to 6,0
+Void-Sorcery-CMC:3 to 6,0
+Void-Creature-CMC:7 to 9,0
+Void-Enchantment-CMC:7 to 9,0
+Void-Instant-CMC:7 to 9,0
+Void-Artifact-CMC:7 to 9,0
+Void-Sorcery-CMC:7 to 9,0
+Void-Creature-CMC:10+,0
+Void-Enchantment-CMC:10+,0
+Void-Instant-CMC:10+,0
+Void-Artifact-CMC:10+,0
+Void-Sorcery-CMC:10+,0
+
