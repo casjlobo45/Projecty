@@ -18,9 +18,10 @@ $(document).ready(function(){
 });
 
 function changeSet() {
-    $("#chart").empty()
+    $("#legend").empty();
+    $("#chart").empty();
     $("#chart").append('<div id="explanation" style="visibility: hidden;"><span id="percentage"></span><br/>of Cards have all of these attributes</div>')
-    $("#message").empty()
+    $("#message").empty();
   // Dimensions of sunburst.
   var set = $("#cardSet").val();
   var width = 750;
