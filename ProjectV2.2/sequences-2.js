@@ -19,6 +19,7 @@ $(document).ready(function(){
 
 function changeSet() {
   $("#chart").empty()
+  $("#chart").append('<div id="explanation" style="visibility: hidden;"><span id="percentage"></span><br/>of Cards have all of these attributes</div>')
   $("#message").empty()
 // Dimensions of sunburst.
 var set = $("#cardSet").val();
@@ -129,6 +130,10 @@ function getSizes(set) {
            if(set === data[i].name){
             var numCards = data[i].cards.length
             $("#message").append("<p>This set has a total of "+numCards+" cards.")
+            var rarity
+            var rare = 0
+            var uncommon = 0
+            var common = 0
             for (var j = 0; j<data[i].cards.length; j++){
                if(data[i].cards[j].types[0]==="Land"){
                  if (data[i].cards[j].colorIdentity!==undefined){
@@ -136,6 +141,15 @@ function getSizes(set) {
                    } else {color = "Void"}
                  color = mapColor(color);
                  type = "Land";
+                 rarity = data[i].cards[j].rarity;
+                 console.log(rarity);
+                 if (rarity===rare){
+                   rare=rare+1
+                 } else if (rarity===uncommon){
+                   uncommon=uncommon+1
+                 } else if (rarity===common){
+                   common=common+1
+                 }
                  string = color+"-"+type;
                  if (isItemInArray(array, string)===false){
                    array.push([string, size])
@@ -154,6 +168,15 @@ function getSizes(set) {
                  type = data[i].cards[j].types[0];
                  cmc = data[i].cards[j].cmc;
                  cmc = mapCMC(cmc);
+                 rarity = data[i].cards[j].rarity;
+                 console.log(rarity);
+                 if (rarity==="Rare"){
+                   rare=rare+1
+                 } else if (rarity==="Uncommon"){
+                   uncommon=uncommon+1
+                 } else if (rarity==="Common"){
+                   common=common+1
+                 }
                  string = color+"-"+type+"-"+cmc;
                  if (isItemInArray(array, string)===false){
                    array.push([string, size])
@@ -176,6 +199,7 @@ function getSizes(set) {
          }
          var json = buildHierarchy(array);
          createVisualization(json);
+         $("#message").append("This set contains:<br>"+rare+" rare cards<br>"+uncommon+" uncommon cards<br>"+common+" common cards")
        },
        error: function () {
          console.log("There was an error");
