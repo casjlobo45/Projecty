@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sequences sunburst</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="sequences.css"/>
+            <script type="text/javascript">
+if ( window.addEventListener ) {
+  var state = 0, konami = [38,38,40,40,37,39,37,39,66,65];
+  window.addEventListener("keydown", function(e) {
+    if ( e.keyCode == konami[state] ) state++;
+    else state = 0;
+    if ( state == 10 )
+      window.location = "http://www.nyan.cat";  //you can write your own code here
+    }, true);
+}
+</script>
+  </head>
+  <body>
+    <div id="main">
+      <div id="dropDown">
+        <h4>
+          Please Select a Card Set to see the stats for your selection:
+        </h4>
+        <select id="cardSet" onchange="changeSet()">
+          <option value=""></option>
+        </select>
+        <div id="message"></div>
+      </div>
+      <div id="sequence"></div>
+      <div id="chart">
+        <div id="explanation" style="visibility: hidden;">
+          <span id="percentage"></span><br/>
+          of Cards have all of these attributes
+        </div>
+      </div>
+    </div>
+    <div id="sidebar">
+        <input type="checkbox" id="togglelegend"><span style="color:#000000"> Legend</span><br/>
+      <div id="legend" style="visibility: hidden;"></div>
+    </div>
+    <script type="text/javascript" src="sequences-2.js"></script>
+    <script type="text/javascript">
+      // Hack to make this example display correctly in an iframe on bl.ocks.org
+      d3.select(self.frameElement).style("height", "700px");
+  </script>
+  </body>
+</html>

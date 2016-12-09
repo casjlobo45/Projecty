@@ -1,4 +1,27 @@
+$(document).ready(function(){
+  $.ajax({
+    url: "http://mtgjson.com/json/AllSetsArray.json",
+    dataType: "json",
+    success: function(data){
+      var name
+      for (var i = 0; i<data.length; i++){
+        if (data[i].cards.length>1){
+        name = data[i].name;
+        $("#cardSet").append('<option value="'+name+'">'+name+'</select>')
+        }
+      }
+    },
+    error: function(){
+      console.log("There was an error");
+    }
+  });
+});
+
+function changeSet() {
+  $("#chart").empty()
+  $("#message").empty()
 // Dimensions of sunburst.
+var set = $("#cardSet").val();
 var width = 750;
 var height = 600;
 var radius = Math.min(width, height) / 2;
@@ -51,17 +74,17 @@ var arc = d3.svg.arc()
 
 // Use d3.text and d3.csv.parseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
-d3.text("cards.csv", function(text) {
-  var csv = d3.csv.parseRows(text);
-  getSizes(csv)
+//d3.text("cards.csv", function(text) {
+  //var csv = d3.csv.parseRows(text);
+  //getSizes(csv)
   //console.log(csv);
   //var json = buildHierarchy(csv);
   //console.log(json);
   //createVisualization(json);
-});
+//});
 
 // Function that will designate the size of each path
-function getSizes(csv) {
+function getSizes(set) {
     function mapColor(color) {
       if (color==="B"){
         return "Black"
@@ -75,11 +98,6 @@ function getSizes(csv) {
         return "White"
       } else {return "Void"}
     }
-    function mapType(type){
-      if (type==="Creature"||type==="Instant"||type==="Enchantment"||type==="Artifact"){
-        return type;
-      } else {return "Sorcery"}
-    }
     function mapCMC(cmc){
       if (cmc>9){
         return "CMC:10+"
@@ -89,69 +107,83 @@ function getSizes(csv) {
         return "CMC:3 to 6"
       } else {return "CMC:0 to 2"}
     }
+    function isItemInArray(array, string) {
+      for (var i = 0; i < array.length; i++) {
+        if (array[i][0] === string) {
+            return true;   // Found it
+          }
+      }
+      return false;   // Not found
+    }
      $.ajax({
-       url: "http://mtgjson.com/json/AllCards.json",
+       url: "http://mtgjson.com/json/AllSetsArray.json",
        dataType: "json",
        success: function (data){
-         var arr = $.map(data, function(el) { return el });
-         var color
-         var type
-         var cmc
-         var string
-         var index
-         var size
-         for (var i=0; i<arr.length; i++){
-           if("colorIdentity" in arr[i]===false&&arr[i].layout!=="token"){
-            color = "Void";
-            type = arr[i].types[0];
-            type = mapType(type);
-            cmc = arr[i].cmc;
-            cmc = mapCMC(cmc);
-            string = color+"-"+type+"-"+cmc;
-            for (var j = 0; j<csv.length; j++){
-              if (csv[j][0] === string){
-                index = j;
+         var array = [["Black-Creature-CMC:0-2",0]];
+         var color;
+         var type;
+         var cmc;
+         var string;
+         var size = 0;
+         for (var i=0; i<data.length; i++){
+           if(set === data[i].name){
+            var numCards = data[i].cards.length
+            $("#message").append("<p>This set has a total of "+numCards+" cards.")
+            for (var j = 0; j<data[i].cards.length; j++){
+               if(data[i].cards[j].types[0]==="Land"){
+                 if (data[i].cards[j].colorIdentity!==undefined){
+                      color = data[i].cards[j].colorIdentity[0];
+                   } else {color = "Void"}
+                 color = mapColor(color);
+                 type = "Land";
+                 string = color+"-"+type;
+                 if (isItemInArray(array, string)===false){
+                   array.push([string, size])
+                 } else {
+                  for (var k = 0; k<array.length; k++){
+                    if (array[k][0]===string){
+                      array[k][1]++
+                    }else {continue}
+                  }
+                 }
+              } else if (data[i].cards[j].types[0]==="Creature"||data[i].cards[j].types[0]==="Enchantment"||data[i].cards[j].types[0]==="Instant"||data[i].cards[j].types[0]==="Artifact"||data[i].cards[j].types[0]==="Sorcery"){
+                   if (data[i].cards[j].colorIdentity!==undefined){
+                      color = data[i].cards[j].colorIdentity[0];
+                   } else {color = "Void"}
+                 color = mapColor(color);
+                 type = data[i].cards[j].types[0];
+                 cmc = data[i].cards[j].cmc;
+                 cmc = mapCMC(cmc);
+                 string = color+"-"+type+"-"+cmc;
+                 if (isItemInArray(array, string)===false){
+                   array.push([string, size])
+                 } else {
+                  for (var k = 0; k<array.length; k++){
+                    if (array[k][0]===string){
+                      array[k][1]++
+                    } else {continue}
+                  }
+                 }
               }
-            }
-            if (csv[index]!==undefined){
-                size = csv[index][1];
-                size = parseInt(size);
-                size = size + 1;
-                size = size.toString();
-                csv[index][1] = size;
-              }
-            } else if (arr[i].layout!=="token") {
-            color = arr[i].colorIdentity[0];
-            color = mapColor(color);
-            type = arr[i].types[0];
-            type = mapType(type);
-            cmc = arr[i].cmc;
-            cmc = mapCMC(cmc);
-            string = color+"-"+type+"-"+cmc;
-             for (var k = 0; k<csv.length; k++){
-              if (csv[k][0] === string){
-                index = k;
-              }
-            }
-            if (csv[index]!==undefined){
-                size = csv[index][1];
-                size = parseInt(size);
-                size = size + 1;
-                size = size.toString();
-                csv[index][1] = size;
-            }
-            }
-          }
-         console.log(csv)
-         var json = buildHierarchy(csv);
+           }
+             break
+          } else {continue}
+         }
+         var stringSize
+         for (var m = 0; m<array.length; m++){
+            stringSize = array[m][1];
+            stringSize = stringSize.toString();
+         }
+         var json = buildHierarchy(array);
          createVisualization(json);
-         },
+       },
        error: function () {
          console.log("There was an error");
        }
      })
-  return csv
 };
+  getSizes(set);
+
 
 // Main function to draw and set up the visualization, once we have the data.
 function createVisualization(json) {
@@ -410,3 +442,4 @@ function buildHierarchy(csv) {
   }
   return root;
 };
+}
