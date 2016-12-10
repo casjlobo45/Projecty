@@ -21,7 +21,9 @@ function changeSet() {
   var set = $("#cardSet").val();
     $("#legend").empty();
     $("#chart").empty();
-    $("#chart").append('<h3 style="color:#ffffff">'+set+'</h3><div id="explanation" style="visibility: hidden;"><span id="percentage"></span><br/>of Cards have all of these attributes</div>')
+    $("#set").empty();
+    $("#set").append('<h3 style="color:#ffffff" class="big-words">'+set+'</h3>');
+    $("#chart").append('<div id="explanation" style="visibility: hidden;"><span id="percentage"></span><br/>of Cards have all of these attributes</div>')
     $("#message").empty();
   // Dimensions of sunburst.
   var width = 750;
@@ -199,8 +201,8 @@ function changeSet() {
            }
            var json = buildHierarchy(array);
            createVisualization(json);
-           $("#message").append("<p style='color:#ffffff'>This set has a total of "+numCards+" cards.")
-           $("#message").append("<p style='color:#ffffff'>This set contains:<br>"+rare+" rare cards<br>"+uncommon+" uncommon cards<br>"+common+" common cards")
+           $("#message").append("<p style='color:black'>This set has a total of "+numCards+" cards.")
+           $("#message").append("<p style='color:black'>This set contains:<br>"+rare+" rare cards<br>"+uncommon+" uncommon cards<br>"+common+" common cards")
          },
          error: function () {
            alert("We are having trouble accessing the MTG json file.");

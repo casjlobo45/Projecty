@@ -5,12 +5,22 @@ body {
   background-color: #696969;
   width: 960px;
   height: 700px;
-  margin-top: 10px;
+  /*margin-top: 10px;*/
+  margin: 1em;
 }
 
 #main {
   float: left;
   width: 750px;
+}
+
+.panel {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+#message {
+  font-color: black;
 }
 
 #sidebar {
@@ -31,6 +41,7 @@ body {
 #sequence text, #legend text {
   font-weight: 600;
   fill: #fff;
+  font-size: 10px;
 }
 
 #chart {
@@ -53,4 +64,9 @@ body {
 
 #percentage {
   font-size: 2.5em;
+  font-family: 'Goudy Bookletter 1911', serif;
+}
+
+.big-words {
+  font-family: 'Goudy Bookletter 1911', serif;
 }
