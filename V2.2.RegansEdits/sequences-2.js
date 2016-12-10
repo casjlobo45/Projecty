@@ -5,7 +5,7 @@ $(document).ready(function(){
     success: function(data){
       var name
       for (var i = 0; i<data.length; i++){
-        if (data[i].cards.length>1){
+        if (data[i].cards.length>15){
         name = data[i].name;
         $("#cardSet").append('<option value="'+name+'">'+name+'</select>')
         }
@@ -15,6 +15,7 @@ $(document).ready(function(){
       alert("We are having trouble accessing the MTG json file.");
     }
   });
+  changeSet("All Cards");
 });
 
 function changeSet() {
@@ -42,7 +43,7 @@ function changeSet() {
     "Green": "#089D49",
     "White": "#F2F5A9",
     "Red": "#CE1127",
-    "Void": "#ACACAC",
+    "Colorless": "#ACACAC",
     "Creature":"#4B0082",
     "Enchantment":"#800080",
     "Instant":"#8B008B",
@@ -101,7 +102,7 @@ function changeSet() {
           return "Green"
         } else if (color==="W"){
           return "White"
-        } else {return "Void"}
+        } else {return "Colorless"}
       }
       function mapCMC(cmc){
         if (cmc>9){
@@ -120,6 +121,7 @@ function changeSet() {
         }
         return false;   // Not found
       }
+      if (set!=="All Cards"){
        $.ajax({
          url: "http://mtgjson.com/json/AllSetsArray.json",
          dataType: "json",
@@ -141,7 +143,7 @@ function changeSet() {
                  if(data[i].cards[j].types[0]==="Land"){
                    if (data[i].cards[j].colorIdentity!==undefined){
                         color = data[i].cards[j].colorIdentity[0];
-                     } else {color = "Void"}
+                     } else {color = "Colorless"}
                    color = mapColor(color);
                    type = "Land";
                    rarity = data[i].cards[j].rarity;
@@ -165,7 +167,7 @@ function changeSet() {
                 } else if (data[i].cards[j].types[0]==="Creature"||data[i].cards[j].types[0]==="Enchantment"||data[i].cards[j].types[0]==="Instant"||data[i].cards[j].types[0]==="Artifact"||data[i].cards[j].types[0]==="Sorcery"){
                      if (data[i].cards[j].colorIdentity!==undefined){
                         color = data[i].cards[j].colorIdentity[0];
-                     } else {color = "Void"}
+                     } else {color = "Colorless"}
                    color = mapColor(color);
                    type = data[i].cards[j].types[0];
                    cmc = data[i].cards[j].cmc;
@@ -208,6 +210,72 @@ function changeSet() {
            alert("We are having trouble accessing the MTG json file.");
          }
        })
+      } else if (set==="All Cards"){
+        $.ajax({
+         url: "http://mtgjson.com/json/AllCards.json",
+         dataType: "json",
+         success: function (data){
+           var cardArray = $.map(data, function(el) { return el });
+           var array = [["Black-Creature-CMC:0-2",0]];
+           var color;
+           var type;
+           var cmc;
+           var string;
+           var size = 0;
+           for (var z=0; z<cardArray.length; z++){
+             if(cardArray[z].types!==undefined){
+              if(cardArray[z].types[0]==="Land"){
+                if (cardArray[z].colorIdentity!==undefined){
+                     color = cardArray[z].colorIdentity[0];
+                  } else {color = "Colorless"}
+                color = mapColor(color);
+                type = "Land";
+                string = color+"-"+type;
+                if (isItemInArray(array, string)===false){
+                  array.push([string, size])
+                } else {
+                 for (var y = 0; y<array.length; y++){
+                   if (array[y][0]===string){
+                     array[y][1]++
+                   }else {continue}
+                 }
+                }
+             } else if (cardArray[z].types[0]==="Creature"||cardArray[z].types[0]==="Enchantment"||cardArray[z].types[0]==="Instant"||cardArray[z].types[0]==="Artifact"||cardArray[z].types[0]==="Sorcery"){
+                  if (cardArray[z].colorIdentity!==undefined){
+                     color = cardArray[z].colorIdentity[0];
+                  } else {color = "Colorless"}
+                color = mapColor(color);
+                type = cardArray[z].types[0];
+                cmc = cardArray[z].cmc;
+                cmc = mapCMC(cmc);
+                string = color+"-"+type+"-"+cmc;
+                if (isItemInArray(array, string)===false){
+                  array.push([string, size])
+                } else {
+                 for (var x = 0; x<array.length; x++){
+                   if (array[x][0]===string){
+                     array[x][1]++
+                   } else {continue}
+                 }
+                }
+             }
+             }
+           }
+           var stringSize
+           for (var m = 0; m<array.length; m++){
+              stringSize = array[m][1];
+              stringSize = stringSize.toString();
+              array[m][1] = stringSize;
+           }
+           var json = buildHierarchy(array);
+           createVisualization(json);
+          },
+         error: function () {
+           alert("We are having trouble accessing the MTG json file.");
+         }
+       })
+
+      }
   };
   getSizes(set);
 
