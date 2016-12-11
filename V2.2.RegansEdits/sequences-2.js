@@ -4,10 +4,14 @@ $(document).ready(function(){
     dataType: "json",
     success: function(data){
       var name
+      var date
+      var year
       for (var i = 0; i<data.length; i++){
-        if (data[i].cards.length>15){
+        if (data[i].cards.length>15&&data[i].name!=="Vanguard"&&data[i].name!=="Time Spiral \"Timeshifted\""&&data[i].name!=="Unglued"){
         name = data[i].name;
-        $("#cardSet").append('<option value="'+name+'">'+name+'</select>')
+        date = data[i].releaseDate
+        year = date.substring(0, 4)
+        $("#cardSet").append('<option value="'+name+'">'+name+' ('+year+')</select>')
         }
       }
     },
@@ -25,7 +29,7 @@ function changeSet() {
     $("#set").empty();
     $("#set").append('<h3 style="color:#ffffff" class="big-words">'+set+'</h3>');
     $("#chart").append('<div id="explanation" style="visibility: hidden;"><span id="percentage"></span><br/>of Cards have all of these attributes</div>')
-    $("#message").empty();
+    $("#message").fadeOut("slow")
   // Dimensions of sunburst.
   var width = 750;
   var height = 600;
@@ -131,14 +135,12 @@ function changeSet() {
            var type;
            var cmc;
            var string;
-           var size = 0;
+           var size = 1;
            for (var i=0; i<data.length; i++){
              if(set === data[i].name){
               var numCards = data[i].cards.length
-              var rarity
-              var rare = 0
-              var uncommon = 0
-              var common = 0
+              var rarity=[]
+              var cardRarity
               for (var j = 0; j<data[i].cards.length; j++){
                  if(data[i].cards[j].types[0]==="Land"){
                    if (data[i].cards[j].colorIdentity!==undefined){
@@ -146,13 +148,15 @@ function changeSet() {
                      } else {color = "Colorless"}
                    color = mapColor(color);
                    type = "Land";
-                   rarity = data[i].cards[j].rarity;
-                   if (rarity===rare){
-                     rare=rare+1
-                   } else if (rarity===uncommon){
-                     uncommon=uncommon+1
-                   } else if (rarity===common){
-                     common=common+1
+                   cardRarity = data[i].cards[j].rarity;
+                   if (isItemInArray(rarity, cardRarity)===false){
+                     rarity.push([cardRarity, size])
+                   } else {
+                    for (var l = 0; l<rarity.length; l++){
+                      if (rarity[l][0]===cardRarity){
+                        rarity[l][1]++
+                      }else {continue}
+                    }
                    }
                    string = color+"-"+type;
                    if (isItemInArray(array, string)===false){
@@ -172,13 +176,15 @@ function changeSet() {
                    type = data[i].cards[j].types[0];
                    cmc = data[i].cards[j].cmc;
                    cmc = mapCMC(cmc);
-                   rarity = data[i].cards[j].rarity;
-                   if (rarity==="Rare"){
-                     rare=rare+1
-                   } else if (rarity==="Uncommon"){
-                     uncommon=uncommon+1
-                   } else if (rarity==="Common"){
-                     common=common+1
+                   cardRarity = data[i].cards[j].rarity;
+                   if (isItemInArray(rarity, cardRarity)===false){
+                     rarity.push([cardRarity, size])
+                   } else {
+                    for (var l = 0; l<rarity.length; l++){
+                      if (rarity[l][0]===cardRarity){
+                        rarity[l][1]++
+                      }else {continue}
+                    }
                    }
                    string = color+"-"+type+"-"+cmc;
                    if (isItemInArray(array, string)===false){
@@ -203,8 +209,17 @@ function changeSet() {
            }
            var json = buildHierarchy(array);
            createVisualization(json);
+           console.log(rarity)
            $("#message").append("<p style='color:black'>This set has a total of "+numCards+" cards.")
-           $("#message").append("<p style='color:black'>This set contains:<br>"+rare+" rare cards<br>"+uncommon+" uncommon cards<br>"+common+" common cards")
+           $("#message").html("<p style='color:black'>This set has a total of "+numCards+" cards.<p style='color:black'>This set contains:<br>")
+           for (var c = 0; c<rarity.length; c++){
+             if (rarity[c][1]>1){
+               $("#message").append(rarity[c][1]+" "+rarity[c][0]+" cards<br>")
+             } else {
+               $("#message").append(rarity[c][1]+" "+rarity[c][0]+" card<br>")
+             }
+           }
+           $("#message").fadeIn("slow")
          },
          error: function () {
            alert("We are having trouble accessing the MTG json file.");
@@ -267,6 +282,7 @@ function changeSet() {
               stringSize = stringSize.toString();
               array[m][1] = stringSize;
            }
+           $("#message").slideUp().empty()
            var json = buildHierarchy(array);
            createVisualization(json);
           },
