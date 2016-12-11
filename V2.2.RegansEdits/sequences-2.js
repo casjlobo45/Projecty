@@ -209,17 +209,16 @@ function changeSet() {
            }
            var json = buildHierarchy(array);
            createVisualization(json);
-           console.log(rarity)
-           $("#message").append("<p style='color:black'>This set has a total of "+numCards+" cards.")
-           $("#message").html("<p style='color:black'>This set has a total of "+numCards+" cards.<p style='color:black'>This set contains:<br>")
+           var message = "<h4 class='big-words'><p style='color:black'>This set has a total of "+numCards+" cards.<p style='color:black'>This set contains:<br>"
            for (var c = 0; c<rarity.length; c++){
              if (rarity[c][1]>1){
-               $("#message").append(rarity[c][1]+" "+rarity[c][0]+" cards<br>")
+               message = message + rarity[c][1]+" "+rarity[c][0]+" cards<br>"
              } else {
-               $("#message").append(rarity[c][1]+" "+rarity[c][0]+" card<br>")
+               message = message + rarity[c][1]+" "+rarity[c][0]+" card<br>"
              }
            }
-           $("#message").fadeIn("slow")
+           message = message + "</h4>"
+           $("#message").html(message).fadeIn("slow")
          },
          error: function () {
            alert("We are having trouble accessing the MTG json file.");
